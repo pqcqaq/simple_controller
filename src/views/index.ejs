@@ -151,7 +151,7 @@
 
   // 清空数据
   async function clearData() {
-    await fetch('http://localhost:3000/collector', { method: 'DELETE' });
+    await fetch('../collector', { method: 'DELETE' });
     window.location.reload(); // 刷新页面
   }
 
