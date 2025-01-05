@@ -29,6 +29,6 @@ export type CollectorRes = {
     // 需要新操作，如果为true，则需要将digital_outputs发送给设备
     require_oper: boolean;
     digital_outputs?: {
-        [key: string]: true; // 数字输出信号，key为引脚名，value为信号值
+        [key: string]: boolean; // 数字输出信号，key为引脚名，value为信号值
     }
 }
