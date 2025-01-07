@@ -14,7 +14,6 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
     }
 
     h1 {
@@ -126,20 +125,15 @@
         <td><%= item.uptime %></td>
         <td>电压: <%= item.health.voltage %>, 信号: <%= item.health.signal_strength %>, 温度: <%= item.health.temperature %></td>
         <td><%= item.last_operation_success ? '是' : '否' %></td>
-        <td><button onclick="viewDetails('<%= item.collectorId %>')">查看详情</button></td>
+        <td
+        style="color: #007bff; width: 100px;"
+        >json: 
+          <%= JSON.stringify(item) %>
+        </td>
       </tr>
     <% }); %>
   </tbody>
 </table>
-
-<!-- 模态框 -->
-<div id="modal">
-  <div id="modal-content">
-    <span id="modal-close">&times;</span>
-    <h2>收集器详情</h2>
-    <p id="modal-body">加载中...</p>
-  </div>
-</div>
 
 <script>
   // 查看详情

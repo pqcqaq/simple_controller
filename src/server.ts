@@ -49,15 +49,20 @@ app.use(bodyParser());
 router.post('/collector', (ctx) => {
     const { collector_id, position, timestamp, digital_inputs, uptime, health, last_operation_success } = ctx.request.body as CollectorData;
 
+    const digital_outputs = digital_inputs.slice(0, 2).map((item) => {
+        return item === 0 ? 1 : 0;
+    });
+
     // 生成返回的响应
     const response: CollectorRes = {
         success: true,
-        require_oper: false,
+        require_oper: true,
         // 把digital_inputs的前两位截取，并且反转
-        digital_outputs: digital_inputs.slice(0, 2).forEach((item) => {
-            return item === 0 ? 1 : 0;
-        })!
+        digital_outputs,
     };
+
+    console.log('Received data:', ctx.request.body);
+    console.log('Server Response:', response);
 
     // 将数据保存到内存中
     collectorDataList.push({
