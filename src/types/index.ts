@@ -1,11 +1,12 @@
 
 export type CollectorData = {
-    collectorId: string; // 设备ID
-    position: any; // 4G模块的地理位置信息，先给任意值，之后用经纬度
+    collector_id: string; // 设备ID
+    position: {
+        longitude: number; // 经度,
+        latitude: number; // 纬度
+    }; // 4G模块的地理位置信息，先给任意值，之后用经纬度
     timestamp: number; // 时间戳,用于网络通信数据验证，可以从4G模块获取
-    digital_inputs: {
-        [key: string]: number; // 数字输入信号，key为引脚名，value为信号值
-    }
+    digital_inputs: (0 | 1)[]; // 数字输入信号，每个元素为0或1
     // 开机时长
     uptime: number;
     // 健康状态相关监控数据
@@ -28,7 +29,5 @@ export type CollectorRes = {
     success: boolean;
     // 需要新操作，如果为true，则需要将digital_outputs发送给设备
     require_oper: boolean;
-    digital_outputs?: {
-        [key: string]: boolean; // 数字输出信号，key为引脚名，value为信号值
-    }
+    digital_outputs?: (0 | 1)[]; // 数字输出信号，每个元素为0或1
 }

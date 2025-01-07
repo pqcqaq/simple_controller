@@ -11,13 +11,13 @@ const router = new Router();
 // 存储数据的内存数组
 let collectorDataList: CollectorData[] = [{
     // 示例数据
-    collectorId: 'demo_data',
-    position: 'demo_position',
-    timestamp: 0,
-    digital_inputs: {
-        'input1': 1,
-        'input2': 0,
+    collector_id: 'demo_data',
+    position: {
+        longitude: 0,
+        latitude: 0
     },
+    timestamp: 0,
+    digital_inputs: [0, 1, 0, 1],
     uptime: 0,
     health: {
         voltage: 0,
@@ -47,21 +47,21 @@ app.use(bodyParser());
 
 // 接收 POST 请求
 router.post('/collector', (ctx) => {
-    const { collectorId, position, timestamp, digital_inputs, uptime, health, last_operation_success } = ctx.request.body as CollectorData;
+    const { collector_id, position, timestamp, digital_inputs, uptime, health, last_operation_success } = ctx.request.body as CollectorData;
 
     // 生成返回的响应
     const response: CollectorRes = {
         success: true,
         require_oper: false,
-        digital_outputs: Object.keys(digital_inputs).reduce((acc, key) => {
-            acc[key] = true;
-            return acc;
-        }, {} as { [key: string]: true })
+        // 把digital_inputs的前两位截取，并且反转
+        digital_outputs: digital_inputs.slice(0, 2).forEach((item) => {
+            return item === 0 ? 1 : 0;
+        })!
     };
 
     // 将数据保存到内存中
     collectorDataList.push({
-        collectorId,
+        collector_id,
         position,
         timestamp,
         digital_inputs,
